@@ -1,5 +1,5 @@
 import { useTranslation } from '../../../hooks';
-import { getAttr, isString, isNumber } from '../../../utils';
+import { getAttr, isString, isNumber, convertAreaValue } from '../../../utils';
 import type { HassEntity } from '../../../types/homeassistant';
 import type { SupportedLanguage } from '../../../i18n/locales';
 import './DeviceInfoSection.scss';
@@ -26,6 +26,7 @@ export function DeviceInfoSection({ entity, language }: DeviceInfoSectionProps) 
   const totalCleaningTime = getAttr(attributes.total_cleaning_time, 0);
   const cleaningCount = getAttr(attributes.cleaning_count, 0);
   const unitOfMeasurement = getAttr(attributes.unit_of_measurement, t('units.square_meters'));
+  const convertedTotalArea = convertAreaValue(totalCleanedArea, unitOfMeasurement);
 
   // Network info is nested under 'ap' in some implementations
   const apInfo = attributes.ap as { ssid?: string; rssi?: number; ip?: string } | undefined;
@@ -35,7 +36,7 @@ export function DeviceInfoSection({ entity, language }: DeviceInfoSectionProps) 
 
   const infoItems: InfoItem[] = [
     { labelKey: 'settings.device_info.firmware', value: firmwareVersion },
-    { labelKey: 'settings.device_info.total_area', value: totalCleanedArea, unit: unitOfMeasurement },
+    { labelKey: 'settings.device_info.total_area', value: convertedTotalArea, unit: unitOfMeasurement },
     { labelKey: 'settings.device_info.total_time', value: totalCleaningTime, unitKey: 'units.minutes' },
     { labelKey: 'settings.device_info.total_cleans', value: cleaningCount },
     { labelKey: 'settings.device_info.wifi_ssid', value: wifiSsid },

@@ -2,7 +2,7 @@ import { Settings } from 'lucide-react';
 import type { HassEntity } from '../../types/homeassistant';
 import type { SupportedLanguage } from '../../i18n/locales';
 import { useTranslation } from '../../hooks';
-import { getAttr, isNumber } from '../../utils';
+import { getAttr, isNumber, convertAreaValue } from '../../utils';
 import './Header.scss';
 import {
   BATTERY_EMPTY_ICON_SVG,
@@ -27,6 +27,7 @@ export function Header({ entity, deviceName, onSettingsClick, language }: Header
   const cleaningTime = getAttr(entity.attributes.cleaning_time, 0);
   const batteryLevel = getAttr(entity.attributes.battery, 0);
   const areaUnit = getAttr(entity.attributes.unit_of_measurement, t('units.square_meters'));
+  const convertedArea = convertAreaValue(cleanedArea, areaUnit);
 
   const getBatteryLevelIcon = () => {
     const battery = entity.attributes.battery;
@@ -68,7 +69,7 @@ export function Header({ entity, deviceName, onSettingsClick, language }: Header
         <div className="header__stat">
           <span className="header__stat-icon--area">{AREA_ICON_SVG}</span>
           <span className="header__stat-value">
-            {cleanedArea} {areaUnit}
+            {convertedArea} {areaUnit}
           </span>
         </div>
         <div className="header__stat">

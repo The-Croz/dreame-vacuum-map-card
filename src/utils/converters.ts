@@ -77,3 +77,21 @@ export function buildNumberEntityId(baseEntityId: string, suffix: string): strin
 export function extractBaseEntityId(entityId: string): string {
   return entityId.replace('vacuum.', '');
 }
+
+/**
+ * Converts area values based on the unit of measurement
+ * If unit is in square feet (ft²), converts from m² to ft²
+ * Otherwise returns the original value
+ */
+export function convertAreaValue(value: number, unit?: string): number {
+  if (!unit) return value;
+
+  // Check if unit is in square feet
+  const isSquareFeet = unit.toLowerCase().includes('ft');
+  if (isSquareFeet) {
+    // Convert m² to ft² (1 m² = 10.7639 ft²)
+    return Math.round(value * 10.7639 * 100) / 100;
+  }
+
+  return value;
+}

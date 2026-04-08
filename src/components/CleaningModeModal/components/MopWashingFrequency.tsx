@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { CircularButton } from '../../common';
 import type { SelfCleanFrequency } from '../../../types/vacuum';
-import { getSelfCleanFrequencyIcon, convertSelfCleanFrequencyToService } from '../../../utils';
+import { getSelfCleanFrequencyIcon, convertSelfCleanFrequencyToService, convertAreaValue } from '../../../utils';
 
 type TranslateFunction = (key: string, params?: Record<string, string | number>) => string;
 
@@ -74,6 +74,9 @@ export function MopWashingFrequency({
   const squareMetersUnit = unitOfMeasurement || (t ? t('units.square_meters') : 'm²');
   const minutesShortUnit = t ? t('units.minutes_short') : 'm';
 
+  // Convert display value for UI but keep original for Home Assistant
+  const displayArea = convertAreaValue(localArea, squareMetersUnit);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
     if (selfCleanFrequency === 'By area') {
@@ -136,7 +139,9 @@ export function MopWashingFrequency({
                 left: selfCleanFrequency === 'By area' ? areaTooltipLeft : timeTooltipLeft,
               }}
             >
-              {selfCleanFrequency === 'By area' ? `${localArea}${squareMetersUnit}` : `${localTime}${minutesShortUnit}`}
+              {selfCleanFrequency === 'By area'
+                ? `${displayArea}${squareMetersUnit}`
+                : `${localTime}${minutesShortUnit}`}
             </div>
           </div>
         </div>
