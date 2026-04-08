@@ -32,6 +32,7 @@ interface CustomModeProps {
   baseEntityId: string;
   hass: Hass;
   language?: SupportedLanguage;
+  unitOfMeasurement?: string;
 }
 
 export function CustomMode({
@@ -55,6 +56,7 @@ export function CustomMode({
   baseEntityId,
   hass,
   language,
+  unitOfMeasurement,
 }: CustomModeProps) {
   const { setSelectOption, setSwitch, setNumber } = useHomeAssistantServices(hass);
   const entityIds = useVacuumEntityIds(baseEntityId);
@@ -121,6 +123,7 @@ export function CustomMode({
           areaEntityId={entityIds.selfCleanArea}
           timeEntityId={entityIds.selfCleanTime}
           t={t}
+          unitOfMeasurement={unitOfMeasurement}
         />
       </section>
 

@@ -26,6 +26,7 @@ export function Header({ entity, deviceName, onSettingsClick, language }: Header
   const cleanedArea = getAttr(entity.attributes.cleaned_area, 0);
   const cleaningTime = getAttr(entity.attributes.cleaning_time, 0);
   const batteryLevel = getAttr(entity.attributes.battery, 0);
+  const areaUnit = getAttr(entity.attributes.unit_of_measurement, t('units.square_meters'));
 
   const getBatteryLevelIcon = () => {
     const battery = entity.attributes.battery;
@@ -67,7 +68,7 @@ export function Header({ entity, deviceName, onSettingsClick, language }: Header
         <div className="header__stat">
           <span className="header__stat-icon--area">{AREA_ICON_SVG}</span>
           <span className="header__stat-value">
-            {cleanedArea} {t('units.square_meters')}
+            {cleanedArea} {areaUnit}
           </span>
         </div>
         <div className="header__stat">

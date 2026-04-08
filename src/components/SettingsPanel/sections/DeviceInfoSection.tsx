@@ -13,6 +13,7 @@ interface InfoItem {
   labelKey: string;
   value: string | number;
   unitKey?: string;
+  unit?: string;
 }
 
 export function DeviceInfoSection({ entity, language }: DeviceInfoSectionProps) {
@@ -24,6 +25,7 @@ export function DeviceInfoSection({ entity, language }: DeviceInfoSectionProps) 
   const totalCleanedArea = getAttr(attributes.total_cleaned_area, 0);
   const totalCleaningTime = getAttr(attributes.total_cleaning_time, 0);
   const cleaningCount = getAttr(attributes.cleaning_count, 0);
+  const unitOfMeasurement = getAttr(attributes.unit_of_measurement, t('units.square_meters'));
 
   // Network info is nested under 'ap' in some implementations
   const apInfo = attributes.ap as { ssid?: string; rssi?: number; ip?: string } | undefined;
@@ -33,7 +35,7 @@ export function DeviceInfoSection({ entity, language }: DeviceInfoSectionProps) 
 
   const infoItems: InfoItem[] = [
     { labelKey: 'settings.device_info.firmware', value: firmwareVersion },
-    { labelKey: 'settings.device_info.total_area', value: totalCleanedArea, unitKey: 'units.square_meters' },
+    { labelKey: 'settings.device_info.total_area', value: totalCleanedArea, unit: unitOfMeasurement },
     { labelKey: 'settings.device_info.total_time', value: totalCleaningTime, unitKey: 'units.minutes' },
     { labelKey: 'settings.device_info.total_cleans', value: cleaningCount },
     { labelKey: 'settings.device_info.wifi_ssid', value: wifiSsid },
@@ -48,7 +50,8 @@ export function DeviceInfoSection({ entity, language }: DeviceInfoSectionProps) 
           <span className="device-info-section__label">{t(item.labelKey)}</span>
           <span className="device-info-section__value">
             {item.value}
-            {item.unitKey && ` ${t(item.unitKey)}`}
+            {item.unit && ` ${item.unit}`}
+            {item.unitKey && !item.unit && ` ${t(item.unitKey)}`}
           </span>
         </div>
       ))}

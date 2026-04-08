@@ -21,6 +21,7 @@ interface MopWashingFrequencyProps {
   areaEntityId: string;
   timeEntityId: string;
   t?: TranslateFunction;
+  unitOfMeasurement?: string;
 }
 
 /**
@@ -56,6 +57,7 @@ export function MopWashingFrequency({
   areaEntityId,
   timeEntityId,
   t,
+  unitOfMeasurement,
 }: MopWashingFrequencyProps) {
   const [localArea, setLocalArea] = useState(selfCleanArea);
   const [localTime, setLocalTime] = useState(selfCleanTime);
@@ -69,7 +71,7 @@ export function MopWashingFrequency({
   const timeTooltipLeft = `calc(${selfCleanTimePercent}% + ${thumbWidth / 2 - (selfCleanTimePercent * thumbWidth) / 100}px)`;
 
   // Get translated unit strings
-  const squareMetersUnit = t ? t('units.square_meters') : 'm²';
+  const squareMetersUnit = unitOfMeasurement || (t ? t('units.square_meters') : 'm²');
   const minutesShortUnit = t ? t('units.minutes_short') : 'm';
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

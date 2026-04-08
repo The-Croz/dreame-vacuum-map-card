@@ -48,6 +48,7 @@ export function CleaningModeModal({ opened, onClose, entity, hass, language }: C
   const selfCleanTime = getAttr(entity.attributes.previous_self_clean_time, DEFAULTS.SELF_CLEAN_TIME);
   const selfCleanTimeMin = getAttr(entity.attributes.self_clean_time_min, DEFAULTS.SELF_CLEAN_TIME_MIN);
   const selfCleanTimeMax = getAttr(entity.attributes.self_clean_time_max, DEFAULTS.SELF_CLEAN_TIME_MAX);
+  const unitOfMeasurement = getAttr(entity.attributes.unit_of_measurement, 'm²');
   const mopPadHumidity = getAttr(entity.attributes.mop_pad_humidity, DEFAULTS.MOP_PAD_HUMIDITY);
 
   const modeOptions = [
@@ -130,6 +131,7 @@ export function CleaningModeModal({ opened, onClose, entity, hass, language }: C
               baseEntityId={baseEntityId}
               hass={hass}
               language={language}
+              unitOfMeasurement={unitOfMeasurement}
             />
           )}
         </div>
